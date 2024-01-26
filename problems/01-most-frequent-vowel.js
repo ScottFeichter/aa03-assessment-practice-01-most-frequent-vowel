@@ -59,10 +59,40 @@ mostFrequentVowel(['dog', 'cow', 'pig', 'chicken']); // 'i' or 'o'
 
 ***********************************************************************/
 
-const VOWELS = ['a', 'e', 'i', 'o', 'u'];
+const takeCount = (word, counter) => {
+  for (let char of word) {
+    if (VOWELS.includes(char)) {
+      if (counter[char]) {
+        counter[char]++;
+      } else {
+        counter[char] = 1;
+      }
+    }
+  }
+  return counter;
+};
+
+const mostFromCount = (counter) => {
+  let mostAmount = 0;
+  let mostVowel = "";
+  for (let key in counter) {
+    if (counter[key] > mostAmount) {
+      mostVowel = key;
+      mostAmount = counter[key];
+    }
+  }
+  return mostVowel;
+};
+
+const VOWELS = ["a", "e", "i", "o", "u"];
 const mostFrequentVowel = function (words, counter = {}) {
-  // Your code here 
-}
+  if (words.length === 0) {
+    return mostFromCount(counter);
+  }
+  let word = words.shift();
+  takeCount(word, counter);
+  return mostFrequentVowel(words, counter);
+};
 
 /**************DO NOT MODIFY ANYTHING UNDER THIS  LINE*****************/
 try {
